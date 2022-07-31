@@ -16,7 +16,7 @@ public class Item {
     @Id @GeneratedValue
     @Column(name="ITEM_ID")
     private Long Id;
-
+    @Column(length = 10)
     private String name;
     private int price;
     private int stockQuantity;

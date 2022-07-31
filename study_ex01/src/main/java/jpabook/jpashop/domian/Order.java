@@ -16,8 +16,16 @@ public class Order {
     @Column(name="ORDER_ID")
     private Long id;
 
+
+    /* 객체지향적이지 않은 매핑
     @Column(name="MEMBER_ID")
-    private Long memberId;
+    private Long memberId;*/
+
+    //객체지향적 매핑
+    private Member member;
+    public Member getMember(){
+        return member;
+    }
 
     private LocalDateTime orderDate;
 
