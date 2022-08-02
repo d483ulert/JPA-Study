@@ -11,8 +11,11 @@ public class JpaMain {
 
         Member member = new Member();
         member.setUseranme("member1");
-        member.setTeam(team);
+        member.changeTeam(team);
+//        member.setTeam(team); 이것도 가능
 
-        Team findTeam = findMember.getTeam();
+        team.getMembers().add(member);
+
+        //양방향 매핑일때는 양쪽에 값을 넣어주는게 맞음
     }
 }

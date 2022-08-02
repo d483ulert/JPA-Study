@@ -25,4 +25,9 @@ public class Member {
 
     //setter를 아무렇게나 만들면 set을 할 수 있어서 유지보수에 안좋음.
 
+    public void changeTeam(Team team){
+        //연관관계편의메소드
+        this.team=team;
+        team.getMembers().add(this);
+    }
 }
