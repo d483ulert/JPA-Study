@@ -2,6 +2,7 @@ package jpabook.jpashop.domian;
 import lombok.Getter;
 import lombok.Setter;
 import javax.persistence.*;
+import java.util.*;
 
 @Entity
 @Getter
@@ -15,9 +16,8 @@ public class Member {
     @Column(name="USERNAME")
     private String useranme;
 
-   /*  객체지향적이지 않은 매핑 방법
-    @Column(name="TEAM_ID")
-    private Long teamId;*/
+    @OneToMany(mappedBy = "order")
+    private List<OrderItem> orderItems = new ArrayList<>();
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="TEAM_ID")
