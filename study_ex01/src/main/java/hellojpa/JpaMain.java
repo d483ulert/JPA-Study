@@ -1,8 +1,5 @@
 package hellojpa;
 
-import jpabook.jpashop.domian.Member;
-import jpabook.jpashop.domian.Team;
-
 
 public class JpaMain {
     public static void main(String[] args){
