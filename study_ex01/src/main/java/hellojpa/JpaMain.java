@@ -2,7 +2,9 @@ package hellojpa;
 
 
 import jdk.jfr.StackTrace;
+import jpabook.jpashop.domian.Address;
 import jpabook.jpashop.domian.Child;
+import jpabook.jpashop.domian.Member;
 import jpabook.jpashop.domian.Parent;
 
 import javax.persistence.EntityManager;
@@ -20,19 +22,11 @@ public class JpaMain {
         tx.begin();
 
         try{
-            Child child1 = new Child();
-            Child child2 = new Child();
+           Member member = new Member();
+           member.setUsername("jisung");
+           member.setAddress(new Address("city","street","10"));
 
-            Parent parent = new Parent();
-            parent.addChild(child1);
-            parent.addChild(child2);
-
-            em.persist(parent);
-            em.flush();
-            em.clear();
-            Parent findParent = em.find(Parent.class,parent.getId());
-            findParent.getChildList().remove(0);
-            tx.commit();
+           em.persist(member);
         }
         catch(Exception e) {
             e.printStackTrace();
