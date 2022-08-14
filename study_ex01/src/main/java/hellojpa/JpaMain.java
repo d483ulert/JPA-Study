@@ -22,24 +22,22 @@ public class JpaMain {
         tx.begin();
 
         try{
-            Address address =new Address("city","street","10");
-
+            //값 타입 컬렉션
             Member member = new Member();
-            member.setUsername("jisung");
-            member.setAddress(address);
+            member.setUsername("member1");
+            member.setHomeAddress(new Address("city1","street","ziq"));
+
+            member.getFavoriteFoods().add("치킨");
+            member.getFavoriteFoods().add("족발");
+            member.getFavoriteFoods().add("피자");
+
+            member.getAddressHistory().add(new Address("old1","street","ziq"));
+            member.getAddressHistory().add(new Address("old2","street","ziq"));
+
             em.persist(member);
 
-            Member member1 = new Member();
-            member.setUsername("jisung");
-            member.setAddress(address);
-
-           em.persist(member1);
-
-            member.getAddress().setCity("newcity");
-            /*
-            member, member1 둘다 city값이 newcity로 변경됨
-            이렇게 되지 않으려면 addrss를 entity로 만들어야함
-            */
+            em.flush();
+            em.clear();
         }
         catch(Exception e) {
             e.printStackTrace();
