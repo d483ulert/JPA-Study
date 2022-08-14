@@ -21,9 +21,9 @@ public class Member extends BaseEntity{
 
     @Embedded
     @AttributeOverrides( //컬럼 여러개일때는 @AttributeOverrides  1개일때는@AttributeOverride
-            @AttributeOverride(name="city",column =@Column(name = "work_city")),
-            @AttributeOverride(name="street",column =@Column(name = "stret")),
-            @AttributeOverride(name="zipcode",column =@Column(name = "house"))
+            @AttributeOverride(name = "city",column=@Column(name = "work_city")),
+            @AttributeOverride(name = "street",column=@Column(name = "stret")),
+            @AttributeOverride(name = "zipcode",column=@Column(name = "house"))
     )
     private Address adrs;
 

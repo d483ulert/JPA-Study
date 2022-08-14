@@ -22,11 +22,24 @@ public class JpaMain {
         tx.begin();
 
         try{
-           Member member = new Member();
-           member.setUsername("jisung");
-           member.setAddress(new Address("city","street","10"));
+            Address address =new Address("city","street","10");
 
-           em.persist(member);
+            Member member = new Member();
+            member.setUsername("jisung");
+            member.setAddress(address);
+            em.persist(member);
+
+            Member member1 = new Member();
+            member.setUsername("jisung");
+            member.setAddress(address);
+
+           em.persist(member1);
+
+            member.getAddress().setCity("newcity");
+            /*
+            member, member1 둘다 city값이 newcity로 변경됨
+            이렇게 되지 않으려면 addrss를 entity로 만들어야함
+            */
         }
         catch(Exception e) {
             e.printStackTrace();
