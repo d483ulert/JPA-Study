@@ -18,11 +18,10 @@ public class JpaMain {
 
         try{
 
-            List resultList = (List) em.createQuery("select m.username,m.age from Member m").getResultList();
-            Object o = resultList.get(0);
-            Object [] result = (Object[]) o;
-            System.out.println(result[0]);
-            System.out.println(result[1]);
+            List resultList = (List) em.createQuery("select m from Member m order by m.age desc",Member.class)
+                    .setFirstResult(1)
+                    .setMaxResults(10)
+                    .getResultList();
 
         }
         catch(Exception e) {
