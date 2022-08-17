@@ -1,5 +1,6 @@
 package hellojpa;
 import jpabook.jpashop.domian.Member;
+import jpabook.jpashop.domian.MemberType;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -17,11 +18,19 @@ public class JpaMain {
         tx.begin();
 
         try{
+            Member member = new Member();
+            member.setUsername("Member1");
+            member.setAge(10);
+            member.setMemberType(MemberType.ADMIN);
 
-            List resultList = (List) em.createQuery("select m from Member m order by m.age desc",Member.class)
-                    .setFirstResult(1)
-                    .setMaxResults(10)
+            String query
+            = "select m.username, 'HELLO', true from Member m " +
+                    "where m.memberType=:userType";
+            List<Object[]> result =em.createQuery(query)
+                    .setParameter("userType",MemberType.ADMIN)
                     .getResultList();
+
+
 
         }
         catch(Exception e) {
