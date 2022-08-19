@@ -25,24 +25,16 @@ public class JpaMain {
             member.setMemberType(MemberType.ADMIN);
 
             String query = "select m from Member m join fetch m.team";
+            List<Member> list = em.createNamedQuery("Member.findByUsername",Member.class)
+                    .setParameter("username","회원1")
+                    .getResultList();
 
-            List<Member> list = em.createQuery(query,Member.class).getResultList();
-            for(Member m: list){
-                System.out.println("username="+member.getUsername()+","+"teamName="+member.getTeam().getName());
 
-            }
-
-            //distinct
-            String query2 = "select t from Team t join fetch t.members";
-            List<Team> result = em.createQuery(query2,Team.class).getResultList();
-
-            for(Team team:result){
-                System.out.println(team.getName()+" "+team.getMemberList());
-                for(Member member1:team.getMemberList()){
-                    System.out.println(member1);
-                }
+            for(Member member1 : list){
+                System.out.println(member1);
             }
         }
+
         catch(Exception e) {
             e.printStackTrace();
         }
