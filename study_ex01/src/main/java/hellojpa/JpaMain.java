@@ -1,6 +1,7 @@
 package hellojpa;
 import jpabook.jpashop.domian.Member;
 import jpabook.jpashop.domian.MemberType;
+import jpabook.jpashop.domian.Team;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -23,13 +24,24 @@ public class JpaMain {
             member.setAge(10);
             member.setMemberType(MemberType.ADMIN);
 
-            //
+            String query = "select m from Member m join fetch m.team";
 
+            List<Member> list = em.createQuery(query,Member.class).getResultList();
+            for(Member m: list){
+                System.out.println("username="+member.getUsername()+","+"teamName="+member.getTeam().getName());
 
-            String query2 = "select m from Member m where m.id = :memberId";
-            Member findMember = em.createQuery(query2,Member.class)
-                    .setParameter("memberId",member.getId())
-                    .getSingleResult();
+            }
+
+            //distinct
+            String query2 = "select t from Team t join fetch t.members";
+            List<Team> result = em.createQuery(query2,Team.class).getResultList();
+
+            for(Team team:result){
+                System.out.println(team.getName()+" "+team.getMemberList());
+                for(Member member1:team.getMemberList()){
+                    System.out.println(member1);
+                }
+            }
         }
         catch(Exception e) {
             e.printStackTrace();
