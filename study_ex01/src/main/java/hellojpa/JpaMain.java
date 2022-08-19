@@ -24,17 +24,13 @@ public class JpaMain {
             member.setAge(10);
             member.setMemberType(MemberType.ADMIN);
 
-            String query = "select m from Member m join fetch m.team";
-            List<Member> list = em.createNamedQuery("Member.findByUsername",Member.class)
-                    .setParameter("username","회원1")
-                    .getResultList();
 
+            int resultCount = em.createQuery("update Member m set m.age =20")
+                    .executeUpdate();
+            System.out.println(resultCount);
 
-            for(Member member1 : list){
-                System.out.println(member1);
-            }
+            em.clear(); //중요함 벌크연산은 영속성을 타지않고 바로 db에 들어가기때문에 영속성 clear해줘야함.
         }
-
         catch(Exception e) {
             e.printStackTrace();
         }
