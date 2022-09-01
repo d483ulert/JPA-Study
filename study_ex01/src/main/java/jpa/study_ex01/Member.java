@@ -15,4 +15,8 @@ public class Member {
 
     private String name;
 
+    private String address;
+
+    private int phone_num;
+
 }
