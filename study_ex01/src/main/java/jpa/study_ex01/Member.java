@@ -2,21 +2,23 @@ package jpa.study_ex01;
 
 import lombok.Getter;
 import lombok.Setter;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+
+import javax.persistence.*;
 
 @Entity @Getter
 @Setter
 public class Member {
 
-    @Id @GeneratedValue
+    @Id
+    @GeneratedValue
+    @Column(name = "member_id")
     private Long id;
 
     private String name;
 
-    private String address;
+    @Embedded
+    private Address address;
 
-    private int phone_num;
-
+    @OneToMany(mappedBy = "member")
+    private List<Order> orders = new ArrayList<>();
 }
