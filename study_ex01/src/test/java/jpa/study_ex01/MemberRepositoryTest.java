@@ -1,5 +1,7 @@
 package jpa.study_ex01;
 
+import jpa.study_ex01.domain.Member;
+import jpa.study_ex01.repository.MemberRepository;
 import org.assertj.core.api.Assertions;
 import org.junit.Test;
 import org.junit.runner.RunWith;
