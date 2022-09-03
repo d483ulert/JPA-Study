@@ -26,10 +26,15 @@ public class Category {
     )
     private List<Item> items = new ArrayList<>();
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="parent_id")
     private Category parents;
 
     @OneToMany(mappedBy = "parents")
     private List<Category> child = new ArrayList<>();
+
+    public void addChildCategory(Category child){
+        this.child.add(child);
+        child.setParents(this);
+    }
 }
