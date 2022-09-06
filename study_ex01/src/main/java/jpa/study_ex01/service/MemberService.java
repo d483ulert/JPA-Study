@@ -20,17 +20,17 @@ public class MemberService {
      *  회원가입
      * */
     @Transactional
-    public Long join(Member member) throws IllegalAccessException {
+    public Long join(Member member)  {
         validateDuplicateMember(member);
         repository.save(member);
         return member.getId();
     }
     
     //회원중복체크
-    private void validateDuplicateMember(Member member) throws IllegalAccessException {
+    private void validateDuplicateMember(Member member)  {
         List<Member> findMembers =  repository.findByName(member.getName());
         if(!findMembers.isEmpty()){
-            throw new IllegalAccessException("이미 존재하는 회원입니다.");
+            throw new IllegalStateException("이미 존재하는 회원입니다.");
         }
     }
 
