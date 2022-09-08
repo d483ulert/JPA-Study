@@ -11,7 +11,7 @@ import java.util.List;
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @Getter @Setter
-@DiscriminatorColumn
+@DiscriminatorColumn(name="dtype")
 public abstract class Item {
 
     @Id
@@ -28,5 +28,16 @@ public abstract class Item {
     private List<Category> categorise = new ArrayList<>();
 
 
+    public void addStock(int quantity){
+        this.stockQuantity += quantity;
+    }
 
+    public void removeStock(int quantity){
+        int restStock = this.stockQuantity - quantity;
+
+        if(restStock <0){
+            throw new NotEnoughStockException("need more stock");
+        }
+        this.stockQuantity =restStock;
+    }
 }
