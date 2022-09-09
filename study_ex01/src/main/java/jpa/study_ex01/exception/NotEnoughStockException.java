@@ -1,4 +1,4 @@
-package jpa.study_ex01.domain;
+package jpa.study_ex01.exception;
 
 public class NotEnoughStockException extends RuntimeException {
 
