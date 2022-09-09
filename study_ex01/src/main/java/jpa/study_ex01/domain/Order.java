@@ -33,6 +33,7 @@ public class Order {
     @Enumerated(EnumType.STRING)
     private OrderStatus status;
 
+    protected Order(){}
 
     //양방향에서는 연관관계 메서드가 있으면 좋음
 
