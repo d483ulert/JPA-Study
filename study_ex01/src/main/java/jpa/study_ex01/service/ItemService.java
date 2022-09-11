@@ -1,6 +1,7 @@
 package jpa.study_ex01.service;
 
 import jpa.study_ex01.domain.Item;
+import jpa.study_ex01.item.Book;
 import jpa.study_ex01.repository.ItemRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -28,4 +29,11 @@ public class ItemService {
         return repository.findOne(id);
     }
 
+    @Transactional
+    public void updateItem(Long itemId, Book param) {
+        Item item = repository.findOne(itemId);
+        item.setPrice(param.getPrice());
+        item.setName(param.getName());
+        item.setStockQuantity(param.getStockQuantity());
+    }
 }
