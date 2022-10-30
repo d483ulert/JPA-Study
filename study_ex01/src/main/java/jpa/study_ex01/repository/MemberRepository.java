@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
+import javax.validation.Valid;
 import java.util.List;
 
 @Repository
@@ -13,7 +14,7 @@ public class MemberRepository {
 
     private final EntityManager em;
 
-    public void save(Member member){
+    public void save(@Valid Member member){
         em.persist(member);
     }
     //테스트코드 만들기 쉬프트+컨트롤+T

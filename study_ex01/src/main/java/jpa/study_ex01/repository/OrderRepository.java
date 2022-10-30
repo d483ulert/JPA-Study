@@ -1,6 +1,5 @@
 package jpa.study_ex01.repository;
 
-import jpa.study_ex01.domain.Order;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 import javax.persistence.*;

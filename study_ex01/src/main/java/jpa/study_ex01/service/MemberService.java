@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.validation.Valid;
 import java.util.List;
 
 
@@ -20,7 +21,7 @@ public class MemberService {
      *  회원가입
      * */
     @Transactional
-    public Long join(Member member)  {
+    public Long join(@Valid Member member)  {
         validateDuplicateMember(member);
         repository.save(member);
         return member.getId();

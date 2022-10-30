@@ -1,6 +1,5 @@
 package jpa.study_ex01.repository;
 
-import jpa.study_ex01.domain.Item;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
