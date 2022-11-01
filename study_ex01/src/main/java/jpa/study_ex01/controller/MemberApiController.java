@@ -60,6 +60,7 @@ public class MemberApiController {
     @Data
     static class CreateMembmerRequest {
         private Long id;
+        private String name;
     }
 
 
