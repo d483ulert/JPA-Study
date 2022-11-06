@@ -1,13 +1,13 @@
 package jpa.study_ex01;
 
-import jpa.study_ex01.domain.Member;
+import jpa.study_ex01.domain.*;
+import jpa.study_ex01.item.Book;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.PostConstruct;
 import javax.persistence.EntityManager;
-import java.awt.print.Book;
 
 /***
 * 총 주문 2개
@@ -60,5 +60,4 @@ public class initDb {
 
         }
     }
-
 }
