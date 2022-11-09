@@ -1,8 +1,8 @@
 package jpa.study_ex01.controller;
 
 import jpa.study_ex01.repository.OrderRepository;
-import jpa.study_ex01.repository.order.simplequery.SimpleOrderQueryDto;
 import jpa.study_ex01.repository.order.simplequery.OrderSimpleQueryRepository;
+import jpa.study_ex01.repository.order.simplequery.SimpleOrderQueryDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -11,7 +11,7 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-public class OrderSimpleApiController {
+public class OreController {
 
     private final OrderRepository orderRepository;
     private final OrderSimpleQueryRepository orderSimpleQueryRepository;
