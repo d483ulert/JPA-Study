@@ -6,6 +6,8 @@ import jpa.study_ex01.domain.OrderItem;
 import jpa.study_ex01.domain.OrderStatus;
 import jpa.study_ex01.repository.OrderRepository;
 import jpa.study_ex01.repository.OrderSearch;
+import jpa.study_ex01.repository.order.query.OrderQueryDto;
+import jpa.study_ex01.repository.order.query.OrderQueryRepository;
 import jpa.study_ex01.repository.order.simplequery.OrderSimpleQueryRepository;
 import jpa.study_ex01.repository.order.simplequery.SimpleOrderQueryDto;
 import lombok.Getter;
@@ -24,6 +26,10 @@ import java.util.stream.Collectors;
 public class OrderApiController {
 
     private final OrderRepository orderRepository;
+
+    private final OrderQueryRepository OrderQueryrepository;
+
+
     /* 엔티티 직접노출
     @GetMapping("/api/v1/orders")
     public List<Order> ordersV1(){
@@ -55,7 +61,7 @@ public class OrderApiController {
         return collect;
     }*/
 
-    @GetMapping("/api/v3/orders")
+/*    @GetMapping("/api/v3/orders")
     public List<OrderDto> ordersV3(){
         List<Order> orders = orderRepository.findAllWithItem();
         return orders.stream().map(o->new OrderDto(o))
@@ -68,7 +74,14 @@ public class OrderApiController {
         List<Order> orders = orderRepository.findAllWithMemberDelivery();
         return orders.stream().map(o->new OrderDto(o))
                 .collect(Collectors.toList());
+    }*/
+
+    @GetMapping("/api/v4/orders")
+    public List<OrderQueryDto> ordersV4(){
+       return OrderQueryrepository.findOrderQueryDtos();
     }
+
+
 
     @Getter
     static class OrderDto {
