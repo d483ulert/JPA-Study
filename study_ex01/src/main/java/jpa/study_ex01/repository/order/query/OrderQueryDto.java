@@ -28,4 +28,6 @@ public class OrderQueryDto {
     private Address address;
     private List<OrderItemQueryDto> orderItem;
 
+    public void setOrderItems(List<OrderItemQueryDto> orderItemQueryDtos) {
+    }
 }
