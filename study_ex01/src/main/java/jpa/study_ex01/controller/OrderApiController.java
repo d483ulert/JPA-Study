@@ -74,6 +74,7 @@ public class OrderApiController {
 
         private Long orderId;
         private String name;
+        private String title;
         private LocalDateTime orderDate;
         private OrderStatus orderStatus;
         private Address address;
