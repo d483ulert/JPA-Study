@@ -6,12 +6,15 @@ import jpa.study_ex01.domain.OrderItem;
 import jpa.study_ex01.domain.OrderStatus;
 import jpa.study_ex01.repository.OrderRepository;
 import jpa.study_ex01.repository.OrderSearch;
+import jpa.study_ex01.repository.order.query.OrderQueryDto;
+import jpa.study_ex01.repository.order.query.OrderQueryRepository;
 import jpa.study_ex01.repository.order.simplequery.OrderSimpleQueryRepository;
 import jpa.study_ex01.repository.order.simplequery.SimpleOrderQueryDto;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.aspectj.weaver.ast.Or;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.time.LocalDateTime;
@@ -23,6 +26,10 @@ import java.util.stream.Collectors;
 public class OrderApiController {
 
     private final OrderRepository orderRepository;
+
+    private final OrderQueryRepository OrderQueryrepository;
+
+
     /* 엔티티 직접노출
     @GetMapping("/api/v1/orders")
     public List<Order> ordersV1(){
@@ -54,19 +61,32 @@ public class OrderApiController {
         return collect;
     }*/
 
-    @GetMapping("/api/v3/orders")
+/*    @GetMapping("/api/v3/orders")
     public List<OrderDto> ordersV3(){
         List<Order> orders = orderRepository.findAllWithItem();
         return orders.stream().map(o->new OrderDto(o))
                 .collect(Collectors.toList());
     }
 
-    @GetMapping("/api/v4/orders")
-    public List<OrderDto> ordersV4(){
-        List<Order> orders = orderRepository.findAllWithItem();
+    @GetMapping("/api/v3.1/orders")
+    public List<OrderDto> ordersV3_page(@RequestParam(value = "offset", defaultValue = "0") int offset,
+                                        @RequestParam(value = "limit", defaultValue = "100") int limit){
+        List<Order> orders = orderRepository.findAllWithMemberDelivery();
         return orders.stream().map(o->new OrderDto(o))
                 .collect(Collectors.toList());
+    }*/
+
+    @GetMapping("/api/v4/orders")
+    public List<OrderQueryDto> ordersV4(){
+       return OrderQueryrepository.findOrderQueryDtos();
     }
+
+
+    @GetMapping("/api/v5/orders")
+    public List<OrderQueryDto> ordersV5(){
+        return OrderQueryrepository.findAllByDto_optimization();
+    }
+
 
 
     @Getter
