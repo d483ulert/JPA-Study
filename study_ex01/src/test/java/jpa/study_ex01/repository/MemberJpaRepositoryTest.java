@@ -23,7 +23,7 @@ class MemberJpaRepositoryTest {
         Member findMember = memberJpaRepository.find(savedMember.getId());
 
         assertThat(findMember.getId()).isEqualTo(member.getId());
-        assertThat(findMember.getName()).isEqualTo(member.getName());
+        assertThat(findMember.getUser_name()).isEqualTo(member.getUser_name());
         assertThat(findMember).isEqualTo(member);
 
 
