@@ -12,9 +12,4 @@ public class StudyEx01Application {
 		SpringApplication.run(StudyEx01Application.class, args);
 	}
 
-	@Bean
-	Hibernate5Module hibernate5Module(){
-		return new Hibernate5Module();
-	}
-
 }

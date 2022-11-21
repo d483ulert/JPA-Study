@@ -1,37 +1,8 @@
 package jpa.study_ex01.repository;
 
-import jpa.study_ex01.domain.Member;
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Repository;
+import jpa.study_ex01.entity.Member;
+import org.springframework.data.jpa.repository.JpaRepository;
 
-import javax.persistence.EntityManager;
-import javax.validation.Valid;
-import java.util.List;
+public interface MemberRepository extends JpaRepository<Member,Long>{
 
-@Repository
-@RequiredArgsConstructor
-public class MemberRepository {
-
-    private final EntityManager em;
-
-    public void save(@Valid Member member){
-        em.persist(member);
-    }
-    //테스트코드 만들기 쉬프트+컨트롤+T
-
-
-    public Member findOne(Long id){
-       return em.find(Member.class,id);
-    }
-
-    public List<Member> findAll(){
-        return em.createQuery("select m from Member m",Member.class).getResultList();
-    }
-
-    public List<Member> findByName(String name){
-        return em.createQuery("select m from Member m where m.name= :name",Member.class)
-                .setParameter("name",name)
-                .getResultList();
-    }
 }
-
