@@ -10,13 +10,14 @@ import javax.persistence.*;
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@ToString(of= {"id","user_name","age"})
+@ToString(of= {"id","username","age"})
 public class Member {
 
     @Id @GeneratedValue
     @Column(name ="member_id")
     private Long id;
-    private String user_name;
+    @Column(name ="user_name")
+    private String username;
     private int age;
 
 
@@ -25,11 +26,16 @@ public class Member {
     private Team team;
 
     public Member(String name) {
-        this.user_name = name;
+        this.username = name;
     }
 
-    public Member(String user_name, int age, Team team) {
-        this.user_name=user_name;
+    public Member(String username, int age) {
+        this.username = username;
+        this.age = age;
+    }
+
+    public Member(String username, int age, Team team) {
+        this.username=username;
         this.age=age;
         if( team!=null){
             changeTeam(team);
@@ -38,8 +44,8 @@ public class Member {
         }
     }
 
-    public void changeUsername(String name){
-        this.user_name = name;
+    public void changeUserName(String name){
+        this.username = name;
     }
 
     public void changeTeam(Team team){
