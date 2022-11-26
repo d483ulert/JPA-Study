@@ -9,7 +9,9 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -79,6 +81,32 @@ class MemberRepositoryTest {
         for (MemberDto member : members) {
             System.out.println("s++++"+member);
         }
+    }
 
+    @Test
+    public void findByNames(){
+        Member m1 = new Member("AAA",10);
+        Member m2 = new Member("BBB",30);
+        memberRepository.save(m1);
+        memberRepository.save(m2);
+
+       List<Member> result= memberRepository.findByNames(Arrays.asList("AAA","BBB"));
+        for (Member s :result) {
+            System.out.println("*****"+s);
+        }
+    }
+
+    @Test
+    public void returnType(){
+        Member m1 = new Member("AAA",10);
+        Member m2 = new Member("BBB",30);
+        memberRepository.save(m1);
+        memberRepository.save(m2);
+
+        List<Member> aaa = memberRepository.findListByUsername("AAA");
+        System.out.println("*****aaa"+aaa);
+
+        Optional<Member> findOptional = memberRepository.findMemberOptionalByUsername("ccc");
+        System.out.println("****optional"+findOptional);
     }
 }
