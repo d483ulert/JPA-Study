@@ -6,6 +6,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import java.util.Collection;
@@ -40,6 +41,9 @@ public interface MemberRepository extends JpaRepository<Member,Long>{
    //Slice는 totalCount를 구하지않고 구하려는 갯수에서 +1개를 더 구해서 추가 페이지 여부를 확인함.
    // Slice<Member> findByAge(int age, Pageable pageable);
 
+    @Modifying
+    @Query("update Member m set m.age = m.age+1 where m.age >=:age")
+    int bulkAgePlus(@Param("age")int age);
 
 
 }

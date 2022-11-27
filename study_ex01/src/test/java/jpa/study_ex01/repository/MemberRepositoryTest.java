@@ -13,6 +13,8 @@ import org.springframework.data.domain.Sort;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
@@ -29,6 +31,9 @@ class MemberRepositoryTest {
     private MemberRepository memberRepository;
     @Autowired
     private TeamRepository teamRepository;
+
+    @PersistenceContext
+    EntityManager entityManager;
 
     @Test
     public void testMember(){
@@ -134,8 +139,6 @@ class MemberRepositoryTest {
         memberRepository.save(new Member("member6",10));
         memberRepository.save(new Member("member7",10));
         int age=10;
-        int offset=0;
-        int limit =3;
 
         PageRequest page = PageRequest.of(0,3,Sort.by(Sort.Direction.DESC,"username"));
 
@@ -156,6 +159,30 @@ class MemberRepositoryTest {
 
 
         assertThat(content.size()).isEqualTo(3);
+    }
+
+    @Test
+    public void bulkUpdate(){
+        memberRepository.save(new Member("member1",10));
+        memberRepository.save(new Member("member2",20));
+        memberRepository.save(new Member("member3",30));
+        memberRepository.save(new Member("member4",40));
+        memberRepository.save(new Member("member5",50));
+        memberRepository.save(new Member("member6",60));
+
+        int resultCount = memberRepository.bulkAgePlus(20);
+        System.out.println("resultCount"+resultCount);
+
+        //bulk연산 이후에 또다른 데이터 조작이 필요하다면  영속성컨텍스트를 날려야함.
+        entityManager.flush(); //반영
+        entityManager.clear(); //클리어
+
+        List<Member> all = memberRepository.findAll();
+        for (Member member : all) {
+            System.out.println("***member"+member);
+        }
+
+        assertThat(resultCount).isEqualTo(5);
     }
 
 
