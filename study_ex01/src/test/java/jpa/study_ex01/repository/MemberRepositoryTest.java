@@ -218,5 +218,34 @@ class MemberRepositoryTest {
         }
     }
 
+    @Test
+    public void queryHint(){
+        //given
+        Member member = new Member("member1",10);
+        memberRepository.save(member);
+        entityManager.flush(); //1차 캐시를 db에 넣는것
+        entityManager.clear(); //영속성 컨테스트를 clear
+
+        //when
+        Member findMember = memberRepository.findReadOnlyByUsername("member1");
+        findMember.setUsername("member2");
+        entityManager.flush();
+    }
+
+    @Test
+    public void lock(){
+        //given
+        Member member = new Member("member1",10);
+        memberRepository.save(member);
+        entityManager.flush(); //1차 캐시를 db에 넣는것
+        entityManager.clear(); //영속성 컨테스트를 clear
+
+        //when
+        List<Member> member1 = memberRepository.findLockByUsername("member1");
+        entityManager.flush();
+        for (Member member2 : member1) {
+            System.out.println("****"+member2);
+        }
+    }
 
 }
