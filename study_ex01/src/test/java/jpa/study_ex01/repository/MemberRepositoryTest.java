@@ -185,5 +185,38 @@ class MemberRepositoryTest {
         assertThat(resultCount).isEqualTo(5);
     }
 
+    @Test
+    public void findMemberLazy(){
+        //given
+        Team teamA = new Team("TeamA");
+        Team teamB = new Team("TeamB");
+
+        teamRepository.save(teamA);
+        teamRepository.save(teamB);
+
+        memberRepository.save(new Member("member1",10,teamA));
+        memberRepository.save(new Member("member2",10,teamB));
+
+        entityManager.flush();
+        entityManager.clear();
+
+        //when
+        // List<Member> all = memberRepository.findMemberFetchJoin(); entity graph 안쓸때
+        List<Member> all = memberRepository.findAll();
+        List<Member> all2 = memberRepository.findEntityGraphByUsername("member1");
+        for (Member member : all) {
+            System.out.println("member**** = "+ member.getUsername());
+            System.out.println("member.team**** = "+ member.getTeam().getName());
+            System.out.println("member.teamClass**** = "+ member.getTeam().getClass());
+
+        }
+
+        for (Member member : all2) {
+            System.out.println("member2**** = "+ member.getUsername());
+            System.out.println("member2.team**** = "+ member.getTeam().getName());
+            System.out.println("member2.teamClass**** = "+ member.getTeam().getClass());
+        }
+    }
+
 
 }
