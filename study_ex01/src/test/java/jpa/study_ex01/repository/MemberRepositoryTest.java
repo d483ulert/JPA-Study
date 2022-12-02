@@ -8,24 +8,21 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Slice;
 import org.springframework.data.domain.Sort;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
-
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
-import static org.assertj.core.api.Assertions.as;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @Transactional
 @SpringBootTest
 @Rollback(false)
-class MemberRepositoryTest {
+class MemberRepositoryTest{
 
     @Autowired
     private MemberRepository memberRepository;
@@ -246,6 +243,31 @@ class MemberRepositoryTest {
         for (Member member2 : member1) {
             System.out.println("****"+member2);
         }
+    }
+
+    @Test
+    public void JpaEventBaseEntity() throws Exception{
+        //given
+        Member member = new Member("memberA",10);
+        memberRepository.save(member);//@PrePersist 발생
+
+        Thread.sleep(100);
+        member.setUsername("member2");
+        entityManager.flush();
+        entityManager.clear();
+
+        //when
+        Member findMember = memberRepository.findById(member.getId()).get();
+
+
+        //then
+        System.out.println("findMember.getCreateDate"+ findMember.getCreateDate());
+        System.out.println("findMember.getUpdateDate"+ findMember.getUpdateDate());
+
+        System.out.println("findMember.getCreateBy"+ findMember.getCreateBy());
+        System.out.println("findMember.getLastModifiedBy"+ findMember.getLastModifiedBy());
+
+
     }
 
 }
