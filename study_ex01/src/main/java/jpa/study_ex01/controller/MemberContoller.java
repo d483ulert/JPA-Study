@@ -1,12 +1,15 @@
 package jpa.study_ex01.controller;
 
+import jpa.study_ex01.dto.MemberDto;
 import jpa.study_ex01.entity.Member;
 import jpa.study_ex01.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
-
 import javax.annotation.PostConstruct;
 
 @RestController
@@ -26,8 +29,16 @@ public class MemberContoller {
         return member.getUsername();
     }
 
-    @PostConstruct
+    @GetMapping("/members")
+    public Page<MemberDto> list(@PageableDefault(size=5, sort = "username") Pageable pageable){
+        return memberRepository.findAll(pageable).map(MemberDto::new);
+
+    }
+
+    @PostConstruct  //스프링 올라갈때 실행됨
     public void init(){
-        memberRepository.save(new Member("userA",10));
+        for(int i =0; i<100; i++){
+            memberRepository.save(new Member("user"+i,i));
+        }
     }
 }
