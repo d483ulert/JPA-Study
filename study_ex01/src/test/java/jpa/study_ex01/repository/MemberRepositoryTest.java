@@ -6,9 +6,7 @@ import jpa.study_ex01.entity.Team;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.*;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
 import javax.persistence.EntityManager;
@@ -266,8 +264,30 @@ class MemberRepositoryTest{
 
         System.out.println("findMember.getCreateBy"+ findMember.getCreateBy());
         System.out.println("findMember.getLastModifiedBy"+ findMember.getLastModifiedBy());
+    }
 
+    @Test
+    public void queryByExample(){
+        Team teamA = new Team("teamA");
+        entityManager.persist(teamA);
 
+        Member m1 = new Member("m1",0,teamA);
+        Member m2 = new Member("m2",0,teamA);
+        entityManager.persist(m1);
+        entityManager.persist(m2);
+
+        entityManager.flush();
+        entityManager.clear();
+
+        //when
+        //Probe
+        Member member = new Member("m1");
+        ExampleMatcher matcher =  ExampleMatcher.matching().withIgnorePaths("age");
+
+        Example<Member> ex = Example.of(member,matcher);
+        List<Member> exampleMember = memberRepository.findAll(ex);
+
+        assertThat(exampleMember.get(0).getUsername()).isEqualTo("m1");
     }
 
 }
