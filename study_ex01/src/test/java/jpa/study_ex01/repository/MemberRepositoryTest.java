@@ -290,4 +290,26 @@ class MemberRepositoryTest{
         assertThat(exampleMember.get(0).getUsername()).isEqualTo("m1");
     }
 
+    @Test
+    public void projections(){
+
+        //given
+        Team teamA = new Team("teamA");
+        entityManager.persist(teamA);
+
+        Member m1 = new Member("m1",0,teamA);
+        Member m2 = new Member("m2",0,teamA);
+        entityManager.persist(m1);
+        entityManager.persist(m2);
+
+        entityManager.flush();
+        entityManager.clear();
+
+        //when
+        List<UsernameOnlyDto> result = memberRepository.findProjectionsByUsername("m1");
+        for (UsernameOnlyDto usernameOnlyDto : result) {
+            System.out.println("*****userOnly: "+usernameOnlyDto.getUsername());
+        }
+
+    }
 }
